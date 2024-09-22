@@ -55,19 +55,19 @@
 
 ##### a. Mac OS
 
-- Step 1: Install Homebrew\*\*
+- Step 1: Install Homebrew
 
 ```shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-- Step 2: Update Homebrew\*\*
+- Step 2: Update Homebrew
 
 ```shell
 brew update
 ```
 
-- Step 3: Install NodeJS 18\*\*
+- Step 3: Install NodeJS 18
 
 ```shell
 brew install node@18
@@ -75,13 +75,13 @@ brew install node@18
 
 ##### b. Windows install with Chocolate
 
-- Step 1: Open PowerShell as Administrator and run the following command\*\*
+- Step 1: Open PowerShell as Administrator and run the following command
 
 ```shell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 ```
 
-- Step 2: Install NodeJS\*\*
+- Step 2: Install NodeJS
 
 ```shell
 choco install -y nodejs-lts
@@ -89,7 +89,7 @@ choco install -y nodejs-lts
 
 ##### c. Linux
 
-- Step 1: Install NodeJS\*\*
+- Step 1: Install NodeJS
 
 ```shell
 sudo apt install -y nodejs

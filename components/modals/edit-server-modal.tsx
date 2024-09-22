@@ -54,7 +54,7 @@ export const EditServerModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/servers/${server?.id}`, values);
 
@@ -67,7 +67,6 @@ export const EditServerModal = () => {
   };
 
   const handleClose = () => {
-    form.reset();
     onClose();
   };
 
@@ -91,7 +90,10 @@ export const EditServerModal = () => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-8"
+          >
             <div className="space-y-8 px-6">
               <div className="flex items-center justify-center text-center">
                 <FormField

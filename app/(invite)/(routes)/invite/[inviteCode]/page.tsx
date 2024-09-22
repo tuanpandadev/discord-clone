@@ -8,11 +8,9 @@ interface InviteCodePageProps {
   params: {
     inviteCode: string;
   };
-};
+}
 
-const InviteCodePage = async ({
-  params
-}: InviteCodePageProps) => {
+const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   const profile = await currentProfile();
 
   if (!profile) {
@@ -40,13 +38,13 @@ const InviteCodePage = async ({
 
   const server = await db.server.update({
     where: {
-      inviteCode: params.inviteCode,
+      inviteCode: params.inviteCode
     },
     data: {
       members: {
         create: [
           {
-            profileId: profile.id,
+            profileId: profile.id
           }
         ]
       }
@@ -56,8 +54,8 @@ const InviteCodePage = async ({
   if (server) {
     return redirect(`/servers/${server.id}`);
   }
-  
+
   return null;
-}
- 
+};
+
 export default InviteCodePage;

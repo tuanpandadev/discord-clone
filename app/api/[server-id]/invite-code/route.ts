@@ -6,14 +6,9 @@ import { db } from "@/lib/db";
 
 export async function PATCH(
   req: Request,
-  {params}: {
-    
-    serverId: string;
-  }
+  { params }: { params: { serverId: string } }
 ) {
   try {
-    console.log(params);
-
     const profile = await currentProfile();
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
