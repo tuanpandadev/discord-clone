@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "docker:build": "docker-compose up -d --build",
-    "docker": "docker-compose up -d",
-    "docker:stop": "docker-compose down",
-    "setup:db": "npx prisma migrate deploy && npx prisma db pull",
-    "prisma:generation": "npx prisma generate && npx prisma db push"
+    "docker:start": "docker build -t discord-clone . && docker run -d -p 3000:3000 discord-clone",
+    "docker:stop": "docker stop discord-clone",
+    "docker-compose:dev": "docker-compose up -d",
+    "docker-compose:stop": "docker-compose down",
+    "prisma:generation": "npx prisma generate && npx prisma db push",
+    "prisma:reset": "npx prisma migrate reset && npx prisma db push",
+    "prisma:studio": "npx prisma studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.2",
