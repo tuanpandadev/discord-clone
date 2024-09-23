@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import * as z from "zod";
@@ -30,9 +31,9 @@ import {
   SelectItem,
   SelectValue
 } from "@/components/ui/select";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 import { useModal } from "@/hooks/use-modal-store";
 
 const formSchema = z.object({
@@ -48,17 +49,19 @@ const formSchema = z.object({
 });
 
 export const CreateChannelModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const params = useParams();
 
   const isModalOpen = isOpen && type === "createChannel";
 
+  const { channelType } = data;
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: ChannelType.TEXT
+      type: channelType || ChannelType.TEXT
     }
   });
 
@@ -83,9 +86,19 @@ export const CreateChannelModal = () => {
   };
 
   const handleClose = () => {
-    form.reset();
     onClose();
+    setTimeout(() => {
+      form.reset();
+    }, 1000);
   };
+
+  useEffect(() => {
+    if (channelType) {
+      form.setValue("type", channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [channelType, form]);
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
