@@ -34,11 +34,11 @@ export function ServerMember({ member }: ServerMemberProps) {
     <button
       onClick={onClick}
       className={cn(
-        "group p-2 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
+        "group px-2 py-3 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
         params?.memberId === member.id && "bg-zinc-700/20 dark:bg-zinc-700"
       )}
     >
-      <UserAvatar className="size-8 md:size-8" src={member.profile.imageUrl} />
+      <UserAvatar className="size-5 md:size-5" src={member.profile.imageUrl} />
       <p
         className={cn(
           "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",
