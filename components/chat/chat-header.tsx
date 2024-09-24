@@ -4,6 +4,7 @@ import { ChannelType } from "@prisma/client";
 
 import { MobileToggle } from "@/components/mobile-toggle";
 import { UserAvatar } from "@/components/user-avatar";
+import { SocketIndicator } from "@/components/socket-indicator";
 
 interface ChannelIdPageProps {
   serverId: string;
@@ -45,6 +46,9 @@ export function ChatHeader({
       <p className="ml-3 font-semibold text-md text-black dark:text-white">
         {name}
       </p>
+      <div className="ml-auto flex items-center">
+        <SocketIndicator />
+      </div>
     </div>
   );
 }

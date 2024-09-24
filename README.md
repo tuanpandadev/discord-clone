@@ -101,7 +101,7 @@ After installing NodeJS, you can verify the installation by running the followin
 node -v
 ```
 
-**If you want to use yarn instead of npm, you can to install it with the following command.**
+**Note:** If you want to use yarn instead of npm, you can to install it with the following command.
 
 ```shell
 npm i -g yarn
@@ -209,7 +209,10 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 UPLOADTHING_TOKEN=
+NEXT_PUBLIC_SITE_URL=
 ```
+
+**Note:** You need to set the `NEXT_PUBLIC_SITE_URL` to your site url. For example, if you are running the app locally, you can set it to `http://localhost:3000`.
 
 #### 4. Add MySQL Database (I used docker compose)
 
