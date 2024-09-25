@@ -10,7 +10,9 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized. Please sign in to continue.", {
+        status: 401
+      });
     }
     const { name, imageUrl } = await request.json();
     if (!name || !imageUrl) {
@@ -39,7 +41,9 @@ export async function DELETE(
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized. Please sign in to continue.", {
+        status: 401
+      });
     }
     if (!params.serverId) {
       return new NextResponse("Server ID Missing", { status: 400 });

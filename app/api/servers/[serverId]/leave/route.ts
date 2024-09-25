@@ -16,7 +16,9 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized. Please sign in to continue.", {
+        status: 401
+      });
     }
 
     if (!params.serverId) {

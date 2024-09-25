@@ -15,7 +15,9 @@ export async function PATCH(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized. Please sign in to continue.", {
+        status: 401
+      });
     }
     if (!serverId) {
       return new NextResponse("Server ID Missing", { status: 400 });
@@ -57,7 +59,9 @@ export async function DELETE(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized. Please sign in to continue.", {
+        status: 401
+      });
     }
     if (!serverId) {
       return new NextResponse("Server ID Missing", { status: 400 });
