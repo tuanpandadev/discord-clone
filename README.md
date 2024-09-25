@@ -217,13 +217,13 @@ NEXT_PUBLIC_SITE_URL=
 #### 4. Add MySQL Database (I used docker compose)
 
 ```shell
-npm run docker-compose:dev
+npm run docker-compose:start-dev
 ```
 
 or
 
 ```shell
-yarn docker-compose:dev
+yarn docker-compose:start-dev
 ```
 
 #### 5. Setup Prisma
@@ -254,16 +254,16 @@ yarn dev
 
 You can run commands using npm with `npm run [command]`. Here are the available commands and their descriptions:
 
-| Command               | Description                                                        |
-| :-------------------- | :----------------------------------------------------------------- |
-| `dev`                 | Starts a development instance of the app                           |
-| `build`               | Builds the application for production                              |
-| `start`               | Starts the production server                                       |
-| `lint`                | Runs the linter to check for code issues                           |
-| `prisma:reset`        | Resets the database by rolling back and applying migrations        |
-| `prisma:studio`       | Opens the Prisma Studio for database management                    |
-| `prisma:generation`   | Generates the Prisma client and applies the schema to the database |
-| `docker:start`        | Builds and runs the Dockerfile for the application                 |
-| `docker:stop`         | Stops the running Docker container for the application             |
-| `docker-compose:dev`  | Starts the Docker containers in detached mode                      |
-| `docker-compose:stop` | Stops and removes the Docker containers                            |
+| Command                    | Description                                                        |
+| :------------------------- | :----------------------------------------------------------------- |
+| `dev`                      | Starts a development instance of the app                           |
+| `build`                    | Builds the application for production                              |
+| `start`                    | Starts the production server                                       |
+| `lint`                     | Runs the linter to check for code issues                           |
+| `prisma:reset`             | Resets the database by rolling back and applying migrations        |
+| `prisma:studio`            | Opens the Prisma Studio for database management                    |
+| `prisma:generation`        | Generates the Prisma client and applies the schema to the database |
+| `docker:start`             | Builds and runs the Dockerfile for the application                 |
+| `docker:stop`              | Stops the running Docker container for the application             |
+| `docker-compose:start-dev` | Starts the Docker containers in detached mode                      |
+| `docker-compose:stop`      | Stops and removes the Docker containers                            |
