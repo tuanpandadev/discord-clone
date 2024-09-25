@@ -72,7 +72,7 @@ export default async function handler(
       include: { member: { include: { profile: true } } }
     });
     const channelKey = `chat:${channelId}:messages`;
-    res?.socket?.server?.io?.emit(channelKey, message); 
+    res?.socket?.server?.io?.emit(channelKey, message);
     return res.status(200).json(message);
   } catch (error) {
     console.error("[MESSAGES_POST]", error);
