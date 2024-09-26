@@ -14,15 +14,21 @@ export async function DELETE(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401
+        }
+      );
     }
     if (!serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Server ID Missing" }, { status: 400 });
     }
     if (!params.channelId) {
-      return new NextResponse("Channel ID Missing", { status: 400 });
+      return NextResponse.json(
+        { error: "Channel ID Missing" },
+        { status: 400 }
+      );
     }
 
     const server = await db.server.update({
@@ -44,7 +50,10 @@ export async function DELETE(
     return NextResponse.json(server);
   } catch (error) {
     console.error("[CHANNEL_ID_DELETE]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
@@ -59,18 +68,27 @@ export async function PATCH(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        { status: 401 }
+      );
     }
     if (!serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Server ID Missing" }, { status: 400 });
     }
     if (!params.channelId) {
-      return new NextResponse("Channel ID Missing", { status: 400 });
+      return NextResponse.json(
+        { error: "Channel ID Missing" },
+        { status: 400 }
+      );
     }
     if (name === "general") {
-      return new NextResponse("Name can't be 'general'", { status: 400 });
+      return NextResponse.json(
+        { error: "Name can't be 'general'" },
+        {
+          status: 400
+        }
+      );
     }
 
     const server = await db.server.update({
@@ -95,6 +113,9 @@ export async function PATCH(
     return NextResponse.json(server);
   } catch (error) {
     console.error("[CHANNEL_ID_PATCH]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

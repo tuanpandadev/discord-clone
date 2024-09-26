@@ -15,18 +15,21 @@ export async function PATCH(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401
+        }
+      );
     }
     if (!serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Server ID Missing" }, { status: 400 });
     }
     if (!params.memberId) {
-      return new NextResponse("Member ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Member ID Missing" }, { status: 400 });
     }
     if (!role) {
-      return new NextResponse("Role Missing", { status: 400 });
+      return NextResponse.json({ error: "Role Missing" }, { status: 400 });
     }
     const server = await db.server.update({
       where: { id: serverId, profileId: profile.id },
@@ -45,7 +48,10 @@ export async function PATCH(
     return NextResponse.json(server);
   } catch (error) {
     console.error("[MEMBER_ID_PATCH]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
@@ -59,15 +65,18 @@ export async function DELETE(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401
+        }
+      );
     }
     if (!serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Server ID Missing" }, { status: 400 });
     }
     if (!params.memberId) {
-      return new NextResponse("Member ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Member ID Missing" }, { status: 400 });
     }
 
     const server = await db.server.update({
@@ -87,6 +96,9 @@ export async function DELETE(
     return NextResponse.json(server);
   } catch (error) {
     console.error("[MEMBER_ID_DELETE]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

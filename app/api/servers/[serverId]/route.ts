@@ -10,17 +10,20 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401
+        }
+      );
     }
     const { name, imageUrl } = await request.json();
     if (!name || !imageUrl) {
-      return new NextResponse("Missing data", { status: 400 });
+      return NextResponse.json({ error: "Missing data" }, { status: 400 });
     }
 
     if (!params.serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Server ID Missing" }, { status: 400 });
     }
 
     const server = await db.server.update({
@@ -30,23 +33,29 @@ export async function PATCH(
     return NextResponse.json(server);
   } catch (error) {
     console.error("[SERVER_ID_PATCH]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
 export async function DELETE(
-  request: Request,
+  _request: Request,
   { params }: { params: { serverId: string } }
 ) {
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401
+        }
+      );
     }
     if (!params.serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Server ID Missing" }, { status: 400 });
     }
     const server = await db.server.delete({
       where: {
@@ -57,6 +66,9 @@ export async function DELETE(
     return NextResponse.json(server);
   } catch (error) {
     console.error("[SERVER_ID_DELETE]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

@@ -9,25 +9,27 @@ export default async function handler(
   res: NextApiResponseServerIo
 ) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json("Method not allowed");
   }
 
   try {
     const profile = await currentProfilePages(req);
 
-    const { content, fileUrl } = req.body;
+    const { content, fileType } = req.body;
     const { serverId, channelId } = req.query;
     if (!profile) {
-      return res.status(401).json("Unauthorized. Please sign in to continue.");
+      return res
+        .status(401)
+        .json({ error: "Unauthorized. Please sign in to continue." });
     }
     if (!serverId) {
-      return res.status(400).json("Server ID Missing");
+      return res.status(400).json({ error: "Server ID Missing" });
     }
     if (!channelId) {
-      return res.status(400).json("Channel ID Missing");
+      return res.status(400).json({ error: "Channel ID Missing" });
     }
     if (!content) {
-      return res.status(400).json("Content Missing");
+      return res.status(400).json({ error: "Content Missing" });
     }
 
     const server = await db.server.findFirst({
@@ -43,7 +45,7 @@ export default async function handler(
     });
 
     if (!server) {
-      return res.status(404).json("Server not found");
+      return res.status(404).json({ error: "Server not found" });
     }
     const channel = db.channel.findFirst({
       where: {
@@ -53,19 +55,19 @@ export default async function handler(
     });
 
     if (!channel) {
-      return res.status(404).json("Channel not found");
+      return res.status(404).json({ error: "Channel not found" });
     }
     const member = server.members.find(
       (member) => member.profileId === profile.id
     );
     if (!member) {
-      return res.status(404).json("Member not found");
+      return res.status(404).json({ error: "Member not found" });
     }
 
     const message = await db.message.create({
       data: {
         content,
-        fileUrl,
+        fileType,
         channelId: channelId as string,
         memberId: member.id
       },
@@ -76,6 +78,6 @@ export default async function handler(
     return res.status(200).json(message);
   } catch (error) {
     console.error("[MESSAGES_POST]", error);
-    return res.status(500).json("Internal server error");
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }

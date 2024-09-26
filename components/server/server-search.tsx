@@ -55,8 +55,8 @@ export function ServerSearch({ data }: ServerSearchProps) {
     setOpen(false);
     const path =
       type === "member"
-        ? `/servers/${params.serverId}/conversations/${id}`
-        : `/servers/${params.serverId}/channels/${id}`;
+        ? `/servers/${params?.serverId}/conversations/${id}`
+        : `/servers/${params?.serverId}/channels/${id}`;
     router.push(path);
   };
 

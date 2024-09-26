@@ -9,9 +9,12 @@ export async function POST(request: Request) {
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401
+        }
+      );
     }
     const { imageUrl, name } = await request.json();
 
@@ -42,6 +45,9 @@ export async function POST(request: Request) {
     return NextResponse.json(server);
   } catch (error) {
     console.error("[SERVERS_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

@@ -10,7 +10,7 @@ import { UploadDropzone } from "@/lib/uploadthing";
 import "@uploadthing/react/styles.css";
 
 interface FileUploadProps {
-  onChange: (url?: string) => void;
+  onChange: (url?: string, fileType?: string) => void;
   value: string;
   endpoint: "messageFile" | "serverImage";
 }
@@ -34,7 +34,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
 
   if (value && fileType.includes("pdf")) {
     return (
-      <div className="relative flex items-center mt-2 rounded-md bg-gray-200 px-3 py-4 gap-x-2">
+      <div className="relative flex items-center mt-2 rounded-md bg-black/10 dark:bg-black/30 px-3 py-4 gap-x-2">
         <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
         <Link
           href={value}
@@ -60,7 +60,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
       endpoint={endpoint}
       onClientUploadComplete={(res) => {
         setFileType(res?.[0]?.type);
-        onChange(res?.[0]?.url);
+        onChange(res?.[0]?.url, res?.[0]?.type);
       }}
       onUploadError={(error: Error) => {
         console.error(error);

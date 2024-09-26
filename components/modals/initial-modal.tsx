@@ -54,10 +54,11 @@ export const InitialModal = () => {
       await axios.post("/api/servers", values);
 
       form.reset();
-      router.refresh();
-      window.location.reload();
+      setTimeout(() => {
+        router.refresh();
+      }, 1000);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

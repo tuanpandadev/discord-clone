@@ -4,7 +4,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 export async function PATCH(
-  req: Request,
+  _req: Request,
   {
     params
   }: {
@@ -16,13 +16,16 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
     if (!profile) {
-      return new NextResponse("Unauthorized. Please sign in to continue.", {
-        status: 401
-      });
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in to continue." },
+        {
+          status: 401
+        }
+      );
     }
 
     if (!params.serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return NextResponse.json({ error: "Server ID Missing" }, { status: 400 });
     }
     const server = await db.server.update({
       where: {
@@ -47,6 +50,6 @@ export async function PATCH(
     return NextResponse.json(server);
   } catch (error) {
     console.error("[SERVER_ID_LEAVE]", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

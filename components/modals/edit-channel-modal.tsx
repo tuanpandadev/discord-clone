@@ -84,7 +84,7 @@ export const EditChannelModal = () => {
         router.push(`/servers/${server?.id}`);
       }, 1000);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
