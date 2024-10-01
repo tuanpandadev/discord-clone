@@ -1,4 +1,4 @@
-# Fullstack Discord: Next.js 14, React, Socket.io, Prisma, Tailwind CSS, MySQL
+# Fullstack Discord: Next.js 14, React, Socket.io, Prisma, Tailwind CSS, MySQL and Livekit
 
 ## Demo
 
@@ -15,6 +15,7 @@
 - **Shadcn UI** ![Shadcn UI](https://img.shields.io/badge/Shadcn%20UI-Component%20Library-000000)
 - **Tailwind CSS** ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.1-06b6d4?logo=tailwindcss&logoColor=white)
 - **Realtime with Socket.IO** ![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?logo=socket.io&logoColor=white)
+- **Video Call with Livekit** ![Livekit](https://avatars.githubusercontent.com/u/69438833?s=20)
 
 ### Back-End
 
@@ -26,6 +27,7 @@
 - **Socket.IO** ![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?logo=socket.io&logoColor=white)
 - **TypeScript** ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 - **Docker-Compose** ![Docker-Compose](https://img.shields.io/badge/Docker--Compose-2496ed?logo=docker&logoColor=white) (optional)
+- **Video Call with Livekit** ![Livekit](https://avatars.githubusercontent.com/u/69438833?s=20)
 
 ## Features:
 
@@ -51,7 +53,7 @@
 
 ### Prerequisites
 
-#### 1. Install NodeJS version 18 or later
+#### 1. Install NodeJS version 20 or later
 
 ##### a. Mac OS
 
@@ -67,10 +69,10 @@
 brew update
 ```
 
-- Step 3: Install NodeJS 18
+- Step 3: Install NodeJS 20
 
 ```shell
-brew install node@18
+brew install node@20
 ```
 
 ##### b. Windows install with Chocolate
@@ -100,6 +102,8 @@ After installing NodeJS, you can verify the installation by running the followin
 ```shell
 node -v
 ```
+
+If you see the version number, it means that NodeJS is installed correctly.
 
 **Note:** If you want to use yarn instead of npm, you can to install it with the following command.
 
@@ -168,13 +172,47 @@ npm i -g yarn
   UPLOADTHING_TOKEN=<your_uploadthing_token>
   ```
 
-#### 4. Docker Desktop or Docker Compose (optional)
+#### 4. Get your Livekit API Keys (NEXT_PUBLIC_LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET)
+
+##### Step 1: Create a Livekit Account
+
+- Go to [Livekit](https://livekit.io) and sign up for an account if you don't have one.
+
+##### Step 2: Access the Dashboard
+
+- Log in to your Livekit account.
+- Navigate to your dashboard to manage your projects at [Livekit Dashboard](https://cloud.livekit.io/).
+
+##### Step 3: Create a New Project
+
+- Click on "Create New Project" or select an existing project.
+- Fill or choose in the necessary details and save your project.
+
+##### Step 4: Retrieve Your API Key
+
+- In the project settings, you will find your API keys.
+- Locate and copy your **API Key**, **API Secret** and **Project URL**.
+
+##### Step 5: Store Your API Key Securely
+
+- Store your API key securely in environment variables or configuration files to keep it confidential.
+
+##### Step 6: Use the API Key in Your Application
+
+- Set the **LIVEKIT_API_KEY** and **LIVEKIT_API_SECRET** in your environment file (e.g., `.env`):
+  ```bash
+  LIVEKIT_API_KEY=<your_livekit_api_key>
+  LIVEKIT_API_SECRET=<your_livekit_api_secret>
+  NEXT_PUBLIC_LIVEKIT_URL=<your_livekit_project_url>
+  ```
+
+#### 5. Docker Desktop or Docker Compose (optional)
 
 ### Installation:
 
 **Instructions for setting up the project locally.**
 
-#### 1. Cloning the repository
+##### 1. Cloning the repository
 
 ```shell
 git clone https://github.com/tuanpandadev/discord-clone.git
@@ -186,7 +224,7 @@ or
 git clone git@github.com:tuanpandadev/discord-clone.git
 ```
 
-#### 2. Install packages
+##### 2. Install packages
 
 ```shell
 npm i
@@ -198,7 +236,7 @@ or
 yarn install
 ```
 
-#### 3. Setup .env file
+##### 3. Setup .env file
 
 ```js
 DATABASE_URL="mysql://discord:discord@localhost:3306/discord"
@@ -210,11 +248,14 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 UPLOADTHING_TOKEN=
 NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_LIVEKIT_URL=
+LIVEKIT_API_KEY=
+LIVEKIT_API_SECRET=
 ```
 
 **Note:** You need to set the `NEXT_PUBLIC_SITE_URL` to your site url. For example, if you are running the app locally, you can set it to `http://localhost:3000`.
 
-#### 4. Add MySQL Database (I used docker compose)
+##### 4. Add MySQL Database (I used docker compose)
 
 ```shell
 npm run docker-compose:start-dev
@@ -226,7 +267,7 @@ or
 yarn docker-compose:start-dev
 ```
 
-#### 5. Setup Prisma
+##### 5. Setup Prisma
 
 ```shell
 npm prisma:generation
@@ -238,7 +279,7 @@ or
 yarn prisma:generation
 ```
 
-#### 6. Start the app
+##### 6. Start the app
 
 ```shell
 npm run dev
@@ -250,9 +291,9 @@ or
 yarn dev
 ```
 
-#### 7. Available Commands
+##### 7. Available Commands
 
-You can run commands using npm with `npm run [command]`. Here are the available commands and their descriptions:
+You can run commands using npm with `npm run [command]` or yarn with `yarn [command]`. Here are the available commands and their descriptions:
 
 | Command                    | Description                                                        |
 | :------------------------- | :----------------------------------------------------------------- |
