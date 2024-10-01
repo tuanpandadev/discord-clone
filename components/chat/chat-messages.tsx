@@ -1,11 +1,12 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import { Loader2, ServerCrash } from "lucide-react";
 import { Member, Message, Profile } from "@prisma/client";
 import { format } from "date-fns";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
 import { ChatWelcome } from "@/components/chat/chat-welcome";
 import { ChatItem } from "@/components/chat/chat-item";
@@ -39,10 +40,21 @@ export function ChatMessages({
   socketUrl,
   socketQuery
 }: ChatMessagesProps) {
-  const queryKey = `chat:${chatId}`;
+  const chatRef = useRef<HTMLDivElement>(null);
 
-  const { data, status } =
-    useChatQuery({ apiUrl, paramKey, paramValue, queryKey });
+  const queryKey = `chat:${chatId}`;
+  const addKey = `chat:${chatId}:messages`;
+  const updateKey = `chat:${chatId}:messages:update`;
+
+  const { data, status, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useChatQuery({
+      apiUrl,
+      paramKey,
+      paramValue,
+      queryKey
+    });
+
+  useChatSocket({ queryKey, addKey, updateKey });
 
   if (status === "pending") {
     return (
@@ -67,9 +79,32 @@ export function ChatMessages({
   }
 
   return (
-    <div className="flex-1 flex flex-col py-4 overflow-y-auto">
-      <div className="flex-1" />
-      <ChatWelcome type={type} name={name} />
+    <div
+      ref={chatRef}
+      className="flex-1 flex flex-col py-4 overflow-y-auto scroll-smooth transition"
+    >
+      {!hasNextPage && (
+        <Fragment>
+          <div className="flex-1" />
+          <ChatWelcome type={type} name={name} />
+        </Fragment>
+      )}
+      {hasNextPage && (
+        <div className="flex justify-center">
+          {isFetchingNextPage ? (
+            <Loader2 className="size-6 text-zinc-500 animate-spin my-4" />
+          ) : (
+            <button
+              onClick={() => fetchNextPage()}
+              className="
+                text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 
+                dark:hover:text-zinc-300 text-xs my-4 transition"
+            >
+              Load previous messages
+            </button>
+          )}
+        </div>
+      )}
       <div className="flex flex-col-reverse mt-auto mx-2">
         {data?.pages?.map((group, i: number) => (
           <Fragment key={i}>
