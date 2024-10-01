@@ -7,6 +7,7 @@ import { format } from "date-fns";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
 import { useChatSocket } from "@/hooks/use-chat-socket";
+import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { ChatWelcome } from "@/components/chat/chat-welcome";
 import { ChatItem } from "@/components/chat/chat-item";
@@ -41,6 +42,7 @@ export function ChatMessages({
   socketQuery
 }: ChatMessagesProps) {
   const chatRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   const queryKey = `chat:${chatId}`;
   const addKey = `chat:${chatId}:messages`;
@@ -55,6 +57,14 @@ export function ChatMessages({
     });
 
   useChatSocket({ queryKey, addKey, updateKey });
+
+  useChatScroll({
+    chatRef,
+    bottomRef,
+    loadMore: fetchNextPage,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
+    count: data?.pages[0]?.items?.length ?? 0
+  });
 
   if (status === "pending") {
     return (
@@ -126,6 +136,7 @@ export function ChatMessages({
           </Fragment>
         ))}
       </div>
+      <div ref={bottomRef} />
     </div>
   );
 }
