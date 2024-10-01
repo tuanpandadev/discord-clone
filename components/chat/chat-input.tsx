@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -12,7 +12,6 @@ import qs from "query-string";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import { EmojiPicker } from "@/components/emoji-picker";
 
 import { useModal } from "@/hooks/use-modal-store";
@@ -31,6 +30,7 @@ const formSchema = z.object({
 
 export function ChatInput({ apiUrl, query, name, type }: ChatInputProps) {
   const { onOpen } = useModal();
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,6 +50,9 @@ export function ChatInput({ apiUrl, query, name, type }: ChatInputProps) {
       console.error(error);
     } finally {
       form.reset();
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 500);
       router.refresh();
     }
   };
@@ -81,11 +84,12 @@ export function ChatInput({ apiUrl, query, name, type }: ChatInputProps) {
                     }`}
                     disabled={isLoading}
                     className="
-                        px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 
-                        border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0
-                        text-zinc-600 dark:text-zinc-200 rounded-xl
-                    "
+                      px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 
+                      border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0
+                      text-zinc-600 dark:text-zinc-200 rounded-xl
+                      "
                     {...field}
+                    ref={inputRef}
                   />
                   <div className="absolute top-7 right-8">
                     <EmojiPicker

@@ -89,7 +89,7 @@ export function ChatItem({
       console.error(error);
     } finally {
       form.reset();
-
+      router.refresh();
       setIsEditing(false);
     }
   };
